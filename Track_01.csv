@@ -1,9 +1,0 @@
-Name,Timestamp,ObstacleType
-1,1.0,Jump
-2,2.5,Dive
-3,4.0,Jump
-4,5.5,Dive
-5,7.0,Jump
-6,8.0,Jump
-7,9.5,Dive
-8,11.0,Dive

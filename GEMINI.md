@@ -1,1 +1,9 @@
-the game will be the main character falling down from sky and while falling he will face some obstacles coming to him. This obstacles will come according to the rhythm of the music on the background. after dodging an amount of objects, character will get a bonus and this bonus meter will be on the screen counting the sucessfull dodges to achieve the bonus. so basically its a rhythm game that you dodge objects according to the music while falling down from the sky. this is basically the main idea i want you to ask me questions and make me suggestions to this main idea and let us move along.
+# N0X Data Skater - Combat Project
+
+## Project Overview
+This is a combat-focused variant project.
+
+## Core Components
+- **BP_CombatCharacter**: Main playable character with combat logic.
+- **BP_CombatGameMode**: Game rules and spawning.
+- **AI**: Enemy AI logic.
