@@ -40,11 +40,40 @@ We registered the default GameInstance as `/Game/Ekin/Blueprints/GI_DataSkater.G
 - **Functions to add:**
   - `AddScore` (Input: `Amount` [Integer]):
     - Formula: `CurrentScore = CurrentScore + Amount`.
-    - Check if `CurrentScore > HighScore`. If true, set `HighScore = CurrentScore`.
+    - Check if `CurrentScore > HighScore`. If true:
+      - Set `HighScore = CurrentScore`.
+      - Call `SaveHighScore` function.
     - Call Event Dispatcher `OnScoreChanged` passing `CurrentScore` and `HighScore`.
   - `ResetScore`:
     - Set `CurrentScore = 0`.
     - Call Event Dispatcher `OnScoreChanged` passing `0` and `HighScore`.
+  - `SaveHighScore`:
+    - Call **Create Save Game Object** (selecting `SG_DataSkater` as the class).
+    - Cast the output to `SG_DataSkater`.
+    - Set `SavedHighScore` on the casted object to the current `HighScore` value.
+    - Call **Save Game to Slot** using slot name `"HighScoreSlot"`.
+  - `LoadHighScore`:
+    - Call **Does Save Game Exist** with slot name `"HighScoreSlot"`.
+    - If **True**:
+      - Call **Load Game from Slot** with slot name `"HighScoreSlot"`.
+      - Cast the output to `SG_DataSkater`.
+      - Get `SavedHighScore` from the casted object and set `HighScore = SavedHighScore`.
+    - If **False**:
+      - Set `HighScore = 0`.
+
+### 1.5. SaveGame Configuration (`SG_DataSkater`)
+To make sure the High Score is saved permanently to disk (even if the game is closed and reopened), we use Unreal's `SaveGame` system.
+
+**Steps to create inside Unreal Editor:**
+- Navigate to `Content/Ekin/Blueprints/`.
+- Right-click -> **Blueprint Class** -> search/select **SaveGame** as the parent class. Name it `SG_DataSkater`.
+- **Variables to add:**
+  - `SavedHighScore` (Integer, Default: `0`): Stores the persistent high score.
+
+**Wiring Load on Startup:**
+- In `GI_DataSkater`, open the **Event Graph**.
+- Search for or add **Event Init** (this event fires automatically when the GameInstance is created on startup).
+- Connect **Event Init** to call the `LoadHighScore` function. This ensures the high score is loaded right when the game starts!
 
 ### 2. Triggering Surface Transition Score (Yüzey Geçiş Skoru)
 Whenever the player successfully rotates the cube and transitions to a new surface (e.g., keeping MertNigga from falling):
